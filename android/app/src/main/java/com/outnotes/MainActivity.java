@@ -1,5 +1,6 @@
 package com.outnotes;
 
+import android.os.Bundle; // Additional configuration required by package: react-native-screens: ^3.25.0 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
@@ -13,6 +14,12 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "OutNotes";
+  }
+
+  // Additional configuration required by package: react-native-screens: ^3.25.0 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
   }
 
   /**
