@@ -42,14 +42,14 @@ const NoteList = () => {
                 dispatch(updateNotes(tempNotes));
               }}
             ><Text style={styles.textBtnDelete}>Delete</Text></TouchableOpacity>
-             <TouchableOpacity
+            <TouchableOpacity
               activeOpacity={.75}
               style={styles.btnEdit}
               onPress={() => {
-                navigationServices.navigate('NoteEdit', {note: item, index: index})
+                navigationServices.navigate('NoteEdit', { note: item, index: index })
               }}
             ><Text style={styles.textBtnEdit}>Edit</Text></TouchableOpacity>
-            
+
           </View>
         </View>
       </TouchableOpacity>
@@ -62,6 +62,28 @@ const NoteList = () => {
         <Text style={styles.title}><Text style={styles.titleAlt}>All</Text> Notes</Text>
       </View>
 
+      <View style={styles.containerCompletion}>
+        <Text style={styles.notesNoTotal}>
+          <Text style={styles.notesNoCompleted}>
+            {notes?.filter(element => element.isDone === true)?.length}
+          </Text>
+          /{notes?.length} task{notes?.length > 1 && 's'} done.
+        </Text>
+        <TouchableOpacity
+          activeOpacity={.75}
+          style={styles.btnAdd}
+          onPress={() => {
+            navigationServices.navigate('NoteAdd')
+          }}
+        >
+          <Icons.MaterialIcons
+            name={'note-add'}
+            size={30}
+            color={Colours.quarternary}
+          />
+        </TouchableOpacity>
+      </View>
+
       <FlatList
         data={notes}
         renderItem={renderItem}
@@ -69,33 +91,11 @@ const NoteList = () => {
         style={styles.containerList}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={<View style={styles.notesSeparator} />}
-        ListHeaderComponent={
-          <View style={styles.containerCompletion}>
-            <Text style={styles.notesNoTotal}>
-              <Text style={styles.notesNoCompleted}>
-                {notes?.filter(element => element.isDone === true)?.length}
-              </Text>
-              /{notes?.length} task{notes?.length > 1 && 's'} done.
-            </Text>
-          </View>
-        }
         ListFooterComponent={<View height={30} />}
         ListEmptyComponent={<Text style={styles.textEmptyList}>No notes taken yet...</Text>}
       />
 
-      <TouchableOpacity
-        activeOpacity={.75}
-        style={styles.btnAdd}
-        onPress={() => {
-          navigationServices.navigate('NoteAdd')
-        }}
-      >
-        <Icons.MaterialIcons
-          name={'note-add'}
-          size={30}
-          color={Colours.quarternary}
-        />
-      </TouchableOpacity>
+
     </View>
   );
 }
@@ -121,7 +121,10 @@ const styles = StyleSheet.create({
   },
 
   containerCompletion: {
-    marginBottom: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 30,
+    marginBottom: 30,
   },
   notesNoTotal: {
     color: Colours.tertiary,
@@ -132,6 +135,15 @@ const styles = StyleSheet.create({
     color: Colours.secondary,
     fontSize: 50,
     fontWeight: '400',
+  },
+
+  btnAdd: {
+    backgroundColor: Colours.primary,
+    padding: 0,
+    borderRadius: 100,
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   containerList: {
@@ -207,15 +219,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: Colours.tertiary,
     marginVertical: 16,
-  },
-
-  btnAdd: {
-    position: 'absolute',
-    bottom: 40,
-    right: 40,
-    backgroundColor: Colours.primary,
-    padding: 14,
-    borderRadius: 100,
   },
 });
 
