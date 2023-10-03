@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+
+import { updateNotes } from '../redux/reducers/notes';
 
 import navigationServices from '../routes/navigationServices';
 import { Colours, Images } from '../res'
@@ -7,10 +11,19 @@ import { Colours, Images } from '../res'
 const windowWidth = Dimensions.get('window').width;
 
 const Splash = () => {
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        setTimeout(() => {
-            navigationServices.navigateReset('NoteList')
-        }, 1000);
+        AsyncStorage.getItem('notes')
+            .then(value => {
+                if (JSON.parse(value) !== null) {
+                    dispatch(updateNotes(JSON.parse(value)))
+                }
+                navigationServices.navigateReset('NoteList');
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }, [])
 
     return (
