@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 
 import navigationServices from '../routes/navigationServices';
+import { Colours, Images } from '../res'
+
+const windowWidth = Dimensions.get('window').width;
 
 const Splash = () => {
     useEffect(() => {
         setTimeout(() => {
             navigationServices.navigateReset('NoteList')
-        }, 1500);
+        }, 1000);
     }, [])
 
     return (
         <View style={styles.root}>
-            <Text style={styles.text}>Splash Screen</Text>
+            <Image source={Images.logo} width={windowWidth * .6} height={windowWidth * .6} />
+            <Text style={styles.text}>OutNotes</Text>
         </View>
     );
 }
@@ -20,14 +24,14 @@ const Splash = () => {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#1982C4',
+        backgroundColor: Colours.primary,
         justifyContent: 'center',
         alignItems: 'center',
     },
     text: {
-        color: '#F5FFFF',
-        fontSize: 24,
-        margin: 10,
+        color: Colours.quarternary,
+        fontSize: 28,
+        fontWeight: '500',
     },
 });
 
