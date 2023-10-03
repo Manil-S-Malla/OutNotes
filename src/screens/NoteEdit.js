@@ -47,12 +47,13 @@ const NoteEdit = (props) => {
         ><Text style={styles.textBtnCancel}>Cancel</Text></TouchableOpacity>
         <TouchableOpacity
           activeOpacity={.75}
-          style={styles.btnEdit}
+          style={[styles.btnEdit, note?.length <= 0 && {opacity: 0.6}]}
           onPress={() => {
             let tempNotes = [...notes]; // Since the redux state is immutable, attempting to mutate it causes the state to mutate but the dependent components do not re-render. Thus we use the spread operator to create a copy  of the redux state which is mutable.
             tempNotes[passedParams?.index].note = note;
             dispatch(updateNotes(tempNotes), navigationServices.navigate('NoteList'));
           }}
+          disabled= {note?.length <= 0}
         ><Text style={styles.textBtnEdit}>Edit Note</Text></TouchableOpacity>
       </View>
 

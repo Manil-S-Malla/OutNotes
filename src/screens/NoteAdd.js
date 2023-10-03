@@ -45,7 +45,7 @@ const NoteAdd = () => {
         ><Text style={styles.textBtnCancel}>Cancel</Text></TouchableOpacity>
         <TouchableOpacity
           activeOpacity={.75}
-          style={styles.btnAdd}
+          style={[styles.btnAdd, note?.length <= 0 && {opacity: 0.6}]}
           onPress={() => {
             dispatch(addNote({
               note: note,
@@ -53,6 +53,7 @@ const NoteAdd = () => {
               timeOfCreation: new Date().getTime(),
             }), navigationServices.navigate('NoteList'));
           }}
+          disabled= {note?.length <= 0}
         ><Text style={styles.textBtnAdd}>Add Note</Text></TouchableOpacity>
       </View>
 
